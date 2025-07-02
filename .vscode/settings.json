@@ -15,6 +15,7 @@
         "+ component",
         "+ conventional commit",
         "+ route",
-        "update"
+        "update",
+        "+ logic"
     ]
 }
