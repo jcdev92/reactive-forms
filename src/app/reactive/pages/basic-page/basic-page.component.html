@@ -13,9 +13,9 @@
 
           <input type="text" class="form-control" placeholder="Nombre del producto" formControlName="name">
 
-          @if (isValidField("name")) {
+          @if (formUtils.isValidField(myForm, "name")) {
           <span class="form-text text-danger">
-            {{ getFieldError("name") }}
+            {{ formUtils.getFieldError(myForm, "name") }}
           </span>
           }
         </div>
@@ -26,9 +26,9 @@
         <label class="col-sm-3 col-form-label">Precio</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" placeholder="Precio del producto" formControlName="price">
-          @if (isValidField("price")) {
+          @if (formUtils.isValidField(myForm, "price")) {
           <span class="form-text text-danger">
-            {{ getFieldError("price") }}
+            {{ formUtils.getFieldError(myForm, "price") }}
           </span>
           }
         </div>
@@ -37,11 +37,11 @@
       <!-- Campo de existencias -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Existencias</label>
-        <div class="col-sm-9">
+        <div class="col-sm-9">../../..
           <input type="number" class="form-control" placeholder="Existencias del producto" formControlName="inStorage">
-          @if (isValidField("inStorage")) {
+          @if (formUtils.isValidField(myForm, "inStorage")) {
           <span class="form-text text-danger">
-            {{ getFieldError("inStorage") }}
+            {{ formUtils.getFieldError(myForm, "inStorage") }}
           </span>
           }
         </div>
