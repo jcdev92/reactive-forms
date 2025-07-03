@@ -1,7 +1,7 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off" [formGroup]="myForm">
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()">
 
   <!-- Nombre -->
   <div class="mb-3 row">
@@ -20,31 +20,34 @@
   <div class="mb-3 row">
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9">
-
       <div class="input-group">
-        <input class="form-control" placeholder="Agregar favorito">
-
-
-        <button class="btn btn-outline-primary" type="button">
-          Agregar favorito
+        <input class="form-control"
+        placeholder="Agregar juego"
+        [formControl]="newGame"
+        (keydown.enter)="onAddGame()"
+        (keydown.enter)="$event.preventDefault()">
+        <button class="btn btn-outline-primary" type="button" (click)="onAddGame()">
+          Agregar juego
         </button>
       </div>
+      @if (formUtils.isValidInput(newGame)) {
+      <span class="form-text text-danger">
+        {{ formUtils.getInputError(newGame) }}
+      </span>
+      }
     </div>
   </div>
-
 
   <!-- Lista de Juegos Favoritos -->
   <div class="mb-3 row">
     <label class="col-sm-3 col-form-label">Favoritos</label>
     <div class="col-sm-9" formArrayName="favoriteGames">
-
-      @for (favoriteGame of favoriteGames.controls; track $index; let i = $index) {
+      @for (favoriteGame of favoriteGames.controls; track favoriteGame.value; let i = $index) {
       <div class="mb-1">
-
         <div class="input-group">
           <input class="form-control" [formControlName]="i">
 
-          <button class="btn btn-outline-danger" type="button">
+          <button class="btn btn-outline-danger" type="button" (click)="onRemoveGame(i)">
             Eliminar
           </button>
         </div>
@@ -55,20 +58,21 @@
         }
       </div>
       }
+      @if (formUtils.isValidArray(favoriteGames)) {
+      <span class="form-text text-muted">
+        {{ formUtils.getArrayError(favoriteGames) }}
+      </span>
+      }
     </div>
   </div>
 
-
-
   <div class="row">
     <div class="col-sm-12">
-      <button type="submit" class="btn btn-primary float-end">
-        <!-- [disabled]="myForm.invalid" -->
+      <button type="submit" class="btn btn-primary float-end" [disabled]="myForm.invalid">
         Guardar
       </button>
     </div>
   </div>
-
 
 </form>
 
@@ -83,5 +87,8 @@
 <br>
 
 <span>Agregar Juego</span>
-<!-- <pre>{{ 'object' | json }}</pre>
-<pre>{{ 'object' | json }}</pre> -->
+<br>
+<pre>{{ newGame.valid | json }}</pre>
+<pre>{{ newGame.value | json }}</pre>
+<pre>{{ favoriteGames.errors | json }}</pre>
+<br>
